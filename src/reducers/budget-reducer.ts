@@ -9,7 +9,7 @@ export const initialState: BudgetState = {
     budget: 0
 }
 
-export const BudgetReducer = (
+export const budgetReducer = (
     state: BudgetState = initialState,
     action: BudgetActions
 ) => {
