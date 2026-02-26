@@ -13,7 +13,7 @@ export default function ExpenseForm() {
   const initialExpenseState = {
     name: "",
     amount: 0,
-    category: "",
+    category: "1",
     date: new Date()
   }
 
