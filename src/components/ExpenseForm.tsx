@@ -5,15 +5,21 @@ import "react-calendar/dist/Calendar.css"
 import { categories } from "../data/categories"
 import { type DraftExpense, type Value } from '../types';
 import ErrorMessage from './ErrorMessage';
+import { useBudget } from '../hooks/useBudget';
 
 export default function ExpenseForm() {
   const [error, setError] = useState("");
-  const [expense, setExpense] = useState<DraftExpense>({
+
+  const initialExpenseState = {
     name: "",
     amount: 0,
     category: "",
     date: new Date()
-  });
+  }
+
+  const [expense, setExpense] = useState<DraftExpense>(initialExpenseState);
+
+  const { dispatch } = useBudget();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -40,7 +46,10 @@ export default function ExpenseForm() {
       return;
     }
 
-    setError("");
+    dispatch({ type: "add-expense", payload: { expense } });
+
+    // Reseteamos el state
+    setExpense(initialExpenseState);
   };
 
   return (
