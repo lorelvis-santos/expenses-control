@@ -1,6 +1,35 @@
+import { useState, type ChangeEvent } from 'react';
+import DatePicker from 'react-date-picker';
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css"
 import { categories } from "../data/categories"
+import { type DraftExpense, type Value } from '../types';
 
 export default function ExpenseForm() {
+  const [expense, setExpense] = useState<DraftExpense>({
+    name: "",
+    amount: 0,
+    category: "",
+    date: new Date()
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    const isAmount = name.toLowerCase() === "amount";
+
+    setExpense({
+      ...expense,
+      [name]: isAmount ? +value : value
+    })
+  }
+
+  const handleChangeDate = (value: Value) => {
+    setExpense({
+      ...expense,
+      date: value
+    })
+  }
+
   return (
     <form className="space-y-5">
       <legend
@@ -19,6 +48,8 @@ export default function ExpenseForm() {
           name="name"
           placeholder="Ej. Transporte"
           className="bg-slate-100 p-2 rounded-lg"
+          value={expense.name}
+          onChange={handleChange}
         />
       </div>
 
@@ -32,6 +63,8 @@ export default function ExpenseForm() {
           name="amount"
           placeholder="Ej. 300"
           className="bg-slate-100 p-2 rounded-lg"
+          value={expense.amount}
+          onChange={handleChange}
         />
       </div>
 
@@ -43,6 +76,8 @@ export default function ExpenseForm() {
           id="category"
           name="category"
           className="bg-slate-100 p-2 rounded-lg"
+          value={expense.category}
+          onChange={handleChange}
         >
           <option disabled selected>-- Seleccione una opcion --</option>
           {categories.map(category => {
@@ -56,6 +91,17 @@ export default function ExpenseForm() {
             )
           })}
         </select>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="date" className="text-md">
+          Fecha
+        </label>
+        <DatePicker
+          className="bg-slate-100 p-2 rounded-lg border-none"
+          value={expense.date}
+          onChange={handleChangeDate}
+        />
       </div>
 
       <input 
