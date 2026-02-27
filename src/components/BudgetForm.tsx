@@ -33,7 +33,7 @@ export default function BudgetForm() {
         <input 
           id="budget"
           type="number"
-          className="w-full bg-white border border-gray-200 p-2"
+          className="w-full bg-white border border-gray-200 p-2 rounded-lg"
           placeholder=""
           name="budget"
           onChange={handleChange}
@@ -42,7 +42,7 @@ export default function BudgetForm() {
       <input
         type="submit"
         value="Definir presupuesto"
-        className="bg-blue-600 hover:bg-blue-700 transition-colors cursor-pointer w-full p-2 text-white font-black uppercase disabled:opacity-70 disabled:cursor-not-allowed"
+        className="bg-blue-600 hover:bg-blue-700 transition-colors cursor-pointer w-full p-2 text-white font-black uppercase disabled:opacity-70 disabled:cursor-not-allowed rounded-lg"
         disabled={!isValid}
       />
     </form>
