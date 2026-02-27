@@ -33,6 +33,7 @@ export default function ExpenseDetail({expense}: ExpenseDetailProps) {
     <TrailingActions>
       <SwipeAction
         onClick={() => console.log("eliminando...")}
+        destructive={true}
       >
         Eliminar
       </SwipeAction>
@@ -42,7 +43,7 @@ export default function ExpenseDetail({expense}: ExpenseDetailProps) {
   return (
     <SwipeableList>
       <SwipeableListItem
-        maxSwipe={30}
+        maxSwipe={0.3}
         leadingActions={leadingActions()}
         trailingActions={trailingActions()}
       >
