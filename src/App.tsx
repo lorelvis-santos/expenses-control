@@ -11,7 +11,7 @@ export default function App() {
   const isValidBudget = useMemo(() => state.budget > 0, [state.budget]);
 
   useEffect(() => {
-    localStorage.setItem("budget", `${state.budget}`);
+    localStorage.setItem("budget", state.budget.toString());
     localStorage.setItem("expenses", JSON.stringify(state.expenses))
   }, [state.budget, state.expenses]);
 
