@@ -41,7 +41,7 @@ export default function ExpenseDetail({expense}: ExpenseDetailProps) {
       </SwipeAction>
     </TrailingActions>
   );
-  
+
   return (
     <SwipeableList>
       <SwipeableListItem
@@ -52,7 +52,7 @@ export default function ExpenseDetail({expense}: ExpenseDetailProps) {
       >
         <div className="bg-white shadow-lg p-10 w-full border-b rounded-lg border-gray-200 flex gap-5 items-center justify-between">
           <div className="flex gap-5">
-            <div className="w-20">
+            <div className="w-20 select-none">
               <img src={`icono_${category?.icon}.svg`} alt={`Icono de ${category?.name}`} />
             </div>
 

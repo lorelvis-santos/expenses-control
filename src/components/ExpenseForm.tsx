@@ -49,7 +49,14 @@ export default function ExpenseForm() {
       return;
     }
 
-    dispatch({ type: "add-expense", payload: { expense } });
+    if (editingExpense) {
+      dispatch({ type: "update-expense", payload: { expense: {
+        id: state.editingId!,
+        ...expense
+      } }})
+    } else {
+      dispatch({ type: "add-expense", payload: { expense } });
+    }
 
     // Reseteamos el state
     setExpense(initialExpenseState);
@@ -138,7 +145,7 @@ export default function ExpenseForm() {
       <input 
         type="submit" 
         className="bg-blue-600 hover:bg-blue-700 transition-colors rounded-lg cursor-pointer w-full p-2 text-white uppercase font-bold mt-5"
-        value="Registrar gasto"
+        value={`${editingExpense ? "Actualizar" : "Registrar"} gasto`}
       />
     </form>
   )
