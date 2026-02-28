@@ -9,6 +9,7 @@ import { useBudget } from '../hooks/useBudget';
 
 export default function ExpenseForm() {
   const [error, setError] = useState("");
+  const { state, dispatch } = useBudget();
 
   const initialExpenseState = {
     name: "",
@@ -17,13 +18,15 @@ export default function ExpenseForm() {
     date: new Date()
   }
 
-  const [expense, setExpense] = useState<DraftExpense>(initialExpenseState);
+  const editingExpense = state.editingId
+    ? state.expenses.find(e => e.id === state.editingId)
+    : null;
 
-  const { dispatch } = useBudget();
+  const [expense, setExpense] = useState<DraftExpense>(editingExpense ? editingExpense : initialExpenseState);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    const isAmount = name.toLowerCase() === "amount";
+    const isAmount = ["amount"].includes(name);
 
     setExpense({
       ...expense,
@@ -57,7 +60,7 @@ export default function ExpenseForm() {
       <legend
         className="uppercase text-center text-2xl font-bold border-b-4 border-blue-500 py-2"
       >
-        Nuevo gasto
+        {editingExpense ? "Editando Gasto" : "Nuevo gasto"}
       </legend>
 
       {error && (

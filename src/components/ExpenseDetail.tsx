@@ -18,20 +18,20 @@ type ExpenseDetailProps = {
 }
 
 export default function ExpenseDetail({expense}: ExpenseDetailProps) {
-  const category = useMemo(() => categories.find(c => c.id === expense.category), [expense]);
+  const category = useMemo(() => categories.find(c => c.id === expense.category), [expense.category]);
   const { dispatch } = useBudget();
 
-  const leadingActions = () => (
+  const leadingActions = (
     <LeadingActions>
       <SwipeAction
-        onClick={() => console.log("editando...")}
+        onClick={() => dispatch({ type: "set-editing-id", payload: { id: expense.id } })}
       >
         Editar
       </SwipeAction>
     </LeadingActions>
   );
 
-  const trailingActions = () => (
+  const trailingActions = (
     <TrailingActions>
       <SwipeAction
         onClick={() => dispatch({ type:"remove-expense", payload: {id: expense.id}})}
@@ -41,14 +41,14 @@ export default function ExpenseDetail({expense}: ExpenseDetailProps) {
       </SwipeAction>
     </TrailingActions>
   );
-
+  
   return (
     <SwipeableList>
       <SwipeableListItem
         maxSwipe={0.6}
         threshold={0.3}
-        leadingActions={leadingActions()}
-        trailingActions={trailingActions()}
+        leadingActions={leadingActions}
+        trailingActions={trailingActions}
       >
         <div className="bg-white shadow-lg p-10 w-full border-b rounded-lg border-gray-200 flex gap-5 items-center justify-between">
           <div className="flex gap-5">
