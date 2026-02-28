@@ -4,9 +4,9 @@ import AmountDisplay from "./AmountDisplay";
 import { useBudget } from "../hooks/useBudget";
 
 export default function BudgetTracker() {
-  const { state, totalExpenses, remainingBudget } = useBudget();
+  const { state, dispatch, totalExpenses, remainingBudget } = useBudget();
 
-  const percentage = +((remainingBudget / state.budget) * 100).toFixed(2);
+  const percentage = +((totalExpenses / state.budget) * 100).toFixed(2);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -24,7 +24,11 @@ export default function BudgetTracker() {
       </div>
 
       <div className="flex flex-col justify-center gap-8">
-        <button type="button" className="bg-pink-600 w-full p-2 text-white uppercase font-bold rounded-lg">
+        <button 
+          type="button" 
+          className="bg-pink-600 hover:bg-pink-700 transition-colors w-full p-2 text-white uppercase font-bold rounded-lg cursor-pointer"
+          onClick={() => dispatch({ type: "reset-app" })}
+        >
           Resetear App
         </button>
 

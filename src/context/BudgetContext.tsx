@@ -21,21 +21,14 @@ export const BudgetProvider = ({children} : BudgetProviderProps) => {
     const totalExpenses = useMemo(() => state.expenses.reduce((total, expense) => total + expense.amount, 0), [state.expenses]);
     const remainingBudget = state.budget - totalExpenses;
 
-    const contextValue = useMemo(() => ({
-        state,
-        dispatch,
-        totalExpenses,
-        remainingBudget
-    }), [
-        state, 
-        dispatch, 
-        totalExpenses, 
-        remainingBudget]
-    );
-
     return (
         <BudgetContext.Provider
-            value={contextValue}
+            value={{
+                state,
+                dispatch,
+                totalExpenses,
+                remainingBudget
+            }}
         >
             {children}
         </BudgetContext.Provider>

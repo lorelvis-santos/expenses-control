@@ -7,7 +7,8 @@ export type BudgetActions =
     { type: "add-expense", payload: { expense: DraftExpense } } |
     { type: "update-expense", payload: { expense: Expense } } |
     { type: "remove-expense", payload: { id: Expense["id"] }} |
-    { type: "set-editing-id", payload: { id: Expense["id"] }}
+    { type: "set-editing-id", payload: { id: Expense["id"] }} |
+    { type: "reset-app" }
 
 export type BudgetState = {
     budget: number;
@@ -96,6 +97,12 @@ export const budgetReducer = (
             editingId: action.payload.id,
             modal: true
         }
+    }
+
+    if (action.type === "reset-app") {
+        localStorage.removeItem("budget");
+        localStorage.removeItem("expenses");
+        return initialState;
     }
 
     return state;
