@@ -9,7 +9,7 @@ import { useBudget } from '../hooks/useBudget';
 
 export default function ExpenseForm() {
   const [error, setError] = useState("");
-  const { state, dispatch } = useBudget();
+  const { state, dispatch, remainingBudget } = useBudget();
 
   const initialExpenseState = {
     name: "",
@@ -23,6 +23,7 @@ export default function ExpenseForm() {
     : null;
 
   const [expense, setExpense] = useState<DraftExpense>(editingExpense ? editingExpense : initialExpenseState);
+  const [previousAmount, setPreviousAmount] = useState(editingExpense ? editingExpense.amount : 0);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -49,6 +50,11 @@ export default function ExpenseForm() {
       return;
     }
 
+    if ((expense.amount - previousAmount) > remainingBudget) {
+      setError("Ese gasto se sale del presupuesto");
+      return;
+    }
+
     if (editingExpense) {
       dispatch({ type: "update-expense", payload: { expense: {
         id: state.editingId!,
@@ -60,6 +66,7 @@ export default function ExpenseForm() {
 
     // Reseteamos el state
     setExpense(initialExpenseState);
+    setPreviousAmount(0);
   };
 
   return (
